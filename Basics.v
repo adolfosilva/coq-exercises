@@ -124,3 +124,49 @@ Compute (minusTwo 5).
 Check S.
 Check pred.
 Check minusTwo.
+
+Fixpoint evenb (n:nat) : bool :=
+  match n with
+  | O => true
+  | S O => false
+  | S (S n') => evenb n'
+  end.
+
+Definition oddb (n:nat) : bool := not (evenb n).
+
+Example test_oddb1: oddb 1 = true.
+Proof. simpl. reflexivity. Qed.
+Example test_oddb2: oddb 4 = false.
+Proof. reflexivity. Qed.
+
+Module Playground2.
+
+Fixpoint plus (n m: nat) : nat :=
+  match n with
+    | O => m
+    | S n' => S (plus n' m)
+  end.
+
+Example test_plus: plus 5 5 = 10.
+Proof. simpl. reflexivity. Qed.
+
+Compute (plus 5 5).
+
+End Playground2.
+
+Fixpoint mult (n m : nat) : nat :=
+  match n with
+    | O => O
+    | S n' => plus m (mult n' m)
+  end.
+
+Fixpoint factorial (n:nat) : nat :=
+  match n with
+    | O => S O
+    | S n' => n * (factorial n')
+  end.
+
+Example test_factorial1: (factorial 3) = 6.
+Proof. simpl. reflexivity. Qed.
+Example test_factorial2: (factorial 5) = (mult 10 12).
+Proof. simpl. reflexivity. Qed.
